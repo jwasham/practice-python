@@ -3,7 +3,7 @@ import random
 import scipy
 import matplotlib.pyplot as plt
 
-# This script will test multiple hashes on strings to see if we get a normal distribution
+# This script will test multiple hashes on strings to see if we get a uniform distribution
 
 
 def load_words():
