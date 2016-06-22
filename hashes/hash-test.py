@@ -40,15 +40,18 @@ def is_prime(n):
           d+=1		[or 2]
     What condition will d satisfy after the while loop if n is prime?
     """
-    Dmax = scipy.sqrt(n)
+    d_max = scipy.sqrt(n)
+
     if n == 2:
         return True
-    if n %2 == 0:
+    if n % 2 == 0:
         return False
+
     d = 3
-    while n % d != 0 and d <= Dmax:
+    while n % d != 0 and d <= d_max:
         d += 2
-    return d > Dmax
+
+    return d > d_max
 
 
 def first_prime_greater_than(min):
