@@ -82,7 +82,7 @@ def polyhash_prime(word, a, p, m):
     for c in word:
         hash = (hash * a + ord(c)) % p
 
-    return hash % m
+    return abs(hash % m)
 
 
 def polyhash_noprime(word, a, m):
@@ -90,7 +90,7 @@ def polyhash_noprime(word, a, m):
     for c in word:
         hash = (hash * a + ord(c))
 
-    return hash % m
+    return abs(hash % m)
 
 
 
