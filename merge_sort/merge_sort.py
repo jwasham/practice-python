@@ -1,6 +1,3 @@
-import math
-
-
 class MergeSort(object):
     def __init__(self, numbers):
         self.values = numbers
@@ -12,19 +9,18 @@ class MergeSort(object):
 
     def merge_sort(self, low, high):
         if low < high:
-            mid =  you were here: (low + high) / 2
+            mid = (low + high) // 2
+
             self.merge_sort(low, mid)
             self.merge_sort(mid + 1, high)
             self.merge(low, mid, high)
 
     def merge(self, low, mid, high):
         b = []
-        i = 0
+        i = low
         j = mid + 1
 
-        m = 0
-
-        while i <= low and j <= high:
+        while i <= mid and j <= high:
             if self.values[i] <= self.values[j]:
                 b.append(self.values[i])
                 i += 1
@@ -42,5 +38,3 @@ class MergeSort(object):
 
         for index, val in enumerate(b):
             self.values[low + index] = val
-
-        m += 1
