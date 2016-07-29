@@ -4,7 +4,7 @@ from collections import namedtuple
 Edge = namedtuple('Edge', ['vertex', 'weight'])
 
 
-class GraphWeighted(object):
+class GraphUndirectedWeighted(object):
     def __init__(self, vertex_count):
         self.vertex_count = vertex_count
         self.adjacency_list = [[] for _ in range(vertex_count)]
@@ -13,6 +13,7 @@ class GraphWeighted(object):
         assert source < self.vertex_count
         assert dest < self.vertex_count
         self.adjacency_list[source].append(Edge(dest, weight))
+        self.adjacency_list[dest].append(Edge(source, weight))
 
     def get_edge(self, vertex):
         for e in self.adjacency_list[vertex]:
@@ -47,6 +48,9 @@ def dijkstra(graph, source, dest):
             if distances[e.vertex] > candidate_distance:
                 distances[e.vertex] = candidate_distance
                 parents[e.vertex] = v
+                # primitive but effective negative cycle detection
+                if candidate_distance < -1000:
+                    raise Exception("Negative cycle detected")
                 q.put(([distances[e.vertex], e.vertex]))
 
     shortest_path = []
@@ -61,31 +65,22 @@ def dijkstra(graph, source, dest):
 
 
 def main():
-    g = GraphWeighted(9)
+    g = GraphUndirectedWeighted(9)
     g.add_edge(0, 1, 4)
     g.add_edge(1, 7, 6)
     g.add_edge(1, 2, 1)
-    g.add_edge(1, 0, 4)
-    g.add_edge(2, 1, 1)
     g.add_edge(2, 3, 3)
-    g.add_edge(3, 2, 3)
     g.add_edge(3, 7, 1)
     g.add_edge(3, 4, 2)
     g.add_edge(3, 5, 1)
-    g.add_edge(4, 3, 2)
     g.add_edge(4, 5, 1)
-    g.add_edge(5, 4, 1)
-    g.add_edge(5, 3, 1)
     g.add_edge(5, 6, 1)
-    g.add_edge(6, 5, 1)
     g.add_edge(6, 7, 2)
     g.add_edge(6, 8, 2)
-    g.add_edge(7, 1, 6)
-    g.add_edge(7, 3, 1)
-    g.add_edge(7, 6, 2)
     g.add_edge(7, 8, 2)
-    g.add_edge(8, 7, 2)
-    g.add_edge(8, 6, 2)
+    # for testing negative cycles
+    # g.add_edge(1, 9, -5)
+    # g.add_edge(9, 7, -4)
 
     shortest_path, distance = dijkstra(g, 0, 1)
     assert shortest_path == [0, 1] and distance == 4
