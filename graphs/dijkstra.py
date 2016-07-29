@@ -39,6 +39,9 @@ def dijkstra(graph, source, dest):
 
     while not q.empty():
         v_tuple = q.get()
+        # skip obsolete items that were superceded by new inserts
+        if v_tuple[0] == float("inf"):
+            continue
         v = v_tuple[1]
 
         for e in graph.get_edge(v):
@@ -46,6 +49,7 @@ def dijkstra(graph, source, dest):
             if distances[e.vertex] > candidate_distance:
                 distances[e.vertex] = candidate_distance
                 parents[e.vertex] = v
+                # reinsert into queue with new key because decrease-key not supported
                 q.put(([distances[e.vertex], e.vertex]))
 
     shortest_path = []
@@ -85,6 +89,9 @@ def main():
     g.add_edge(7, 8, 2)
     g.add_edge(8, 7, 2)
     g.add_edge(8, 6, 2)
+
+    shortest_path, distance = dijkstra(g, 0, 1)
+    assert shortest_path == [0, 1] and distance == 4
 
     shortest_path, distance = dijkstra(g, 0, 8)
     assert shortest_path == [0, 1, 2, 3, 7, 8] and distance == 11
