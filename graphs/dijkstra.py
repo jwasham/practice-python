@@ -33,15 +33,13 @@ def dijkstra(graph, source, dest):
         weight = start_weight
         if source == i:
             weight = 0
-        q.put(([weight, i]))
         distances.append(weight)
         parents.append(None)
 
+    q.put(([0, source]))
+
     while not q.empty():
         v_tuple = q.get()
-        # skip obsolete items that were superceded by new inserts
-        if v_tuple[0] == float("inf"):
-            continue
         v = v_tuple[1]
 
         for e in graph.get_edge(v):
@@ -49,7 +47,6 @@ def dijkstra(graph, source, dest):
             if distances[e.vertex] > candidate_distance:
                 distances[e.vertex] = candidate_distance
                 parents[e.vertex] = v
-                # reinsert into queue with new key because decrease-key not supported
                 q.put(([distances[e.vertex], e.vertex]))
 
     shortest_path = []
