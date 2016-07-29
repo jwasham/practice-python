@@ -42,8 +42,9 @@ def dijkstra(graph, source, dest):
         v = v_tuple[1]
 
         for e in graph.get_edge(v):
-            if distances[e.vertex] > distances[v] + e.weight:
-                distances[e.vertex] = distances[v] + e.weight
+            candidate_distance = distances[v] + e.weight
+            if distances[e.vertex] > candidate_distance:
+                distances[e.vertex] = candidate_distance
                 parents[e.vertex] = v
                 q.put(([distances[e.vertex], e.vertex]))
 
@@ -85,12 +86,14 @@ def main():
     g.add_edge(8, 7, 2)
     g.add_edge(8, 6, 2)
 
-    print("Graph created")
+    shortest_path, distance = dijkstra(g, 0, 8)
+    assert shortest_path == [0, 1, 2, 3, 7, 8] and distance == 11
 
-    shortest_path, distance = dijkstra(g, 8, 2)
+    shortest_path, distance = dijkstra(g, 5, 0)
+    assert shortest_path == [5, 3, 2, 1, 0] and distance == 9
 
-    print("shortest path:", shortest_path)
-    print("distance:", distance)
+    shortest_path, distance = dijkstra(g, 1, 1)
+    assert shortest_path == [1] and distance == 0
 
 
 if __name__ == "__main__":
