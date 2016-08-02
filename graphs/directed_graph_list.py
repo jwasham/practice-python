@@ -39,6 +39,23 @@ class DirectedGraph(object):
             for u in self.adjacency_list[vertex]:
                 yield u
 
+    def get_reverse_neighbor(self, vertex):
+        """
+        Generator for returning the reversed edge neighbor to the given vertex (parent)
+        :param vertex:
+        :return:
+        """
+        reversed_list = {}
+        for v, u in self.adjacency_list.items():
+            for w in u:
+                if w not in reversed_list:
+                    reversed_list[w] = set()
+                reversed_list[w].add(v)
+
+        if vertex in reversed_list:
+            for u in reversed_list[vertex]:
+                yield u
+
     def dfs(self):
         """
         Computes the initial source vertices for each connected component
@@ -164,9 +181,49 @@ class DirectedGraph(object):
     def strongly_connected_components(self):
         """
         Compute the vertices in the strongly connected components
-        :return:
+        :return list of lists, one for each components vertices:
         """
-        pass
+        stack = self.scc_dfs_forward_pass()
+        components = self.scc_dfs_reverse_pass(stack)
+
+        return components
+
+    def scc_dfs_forward_pass(self):
+        stack = []
+        visited = set()
+
+        for v in self.get_vertex():
+            self.dfs_forward(v, stack, visited)
+
+        return stack
+
+    def dfs_forward(self, vertex, stack, visited):
+        if vertex not in visited:
+            visited.add(vertex)
+            for u in self.get_neighbor(vertex):
+                self.dfs_forward(u, stack, visited)
+            stack.append(vertex)
+
+    def scc_dfs_reverse_pass(self, stack):
+        components = []
+        visited = set()
+
+        while stack:
+            v = stack.pop()
+            if v not in visited:
+                component = []
+                self.dfs_reverse(v, component, visited)
+                component.reverse()
+                components.append(component)
+
+        return components
+
+    def dfs_reverse(self, vertex, component, visited):
+        if vertex not in visited:
+            visited.add(vertex)
+            component.append(vertex)
+            for u in self.get_reverse_neighbor(vertex):
+                self.dfs_reverse(u, component, visited)
 
 
 def get_test_graph_1():
@@ -240,6 +297,8 @@ def get_test_graph_5():
     dg.add_edge(11, 9)
     dg.add_edge(9, 8)
 
+    return dg
+
 
 def test_dfs():
     dg1 = get_test_graph_1()
@@ -267,11 +326,21 @@ def test_topological_sort():
     assert (get_test_graph_3().topological_sort() == [5, 3, 2, 4, 7, 8, 11])
 
 
+def test_strongly_connected_components():
+    dg = get_test_graph_5()
+
+    assert(dg.contains_cycle())
+
+    components = dg.strongly_connected_components()
+    assert(components == [[10, 11, 9, 8], [7], [0], [1, 3, 2], [6, 4, 5]])
+
+
 def main():
     test_dfs()
     test_bfs()
     test_contains_cycle()
     test_topological_sort()
+    test_strongly_connected_components()
 
     print("Tests complete.")
 
