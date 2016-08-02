@@ -111,7 +111,7 @@ class DirectedGraph(object):
                         statuses[v] = STATUS_FINISHED
                 else:
                     statuses[v] = STATUS_STARTED
-                    to_visit.append(v)  # add to stack to signal vertex has finished DFS
+                    to_visit.append(v)  # add to stack again to signal vertex has finished DFS
 
                 for u in self.get_edge(v):
                     if u in statuses:
@@ -125,6 +125,40 @@ class DirectedGraph(object):
                     break
 
         return contains_cycle
+
+    def topological_sort(self):
+        """
+        Determines the priority of vertices to be visited.
+        :return:
+        """
+        STATUS_STARTED = 1
+        STATUS_FINISHED = 2
+        order = []
+        statuses = {}
+
+        assert(not self.contains_cycle())
+
+        for vertex in self.get_vertex():
+            to_visit = [vertex]
+
+            while to_visit:
+                v = to_visit.pop()
+
+                if v in statuses:
+                    if statuses[v] == STATUS_STARTED:
+                        statuses[v] = STATUS_FINISHED
+                        order.append(v)
+                else:
+                    statuses[v] = STATUS_STARTED
+                    to_visit.append(v)  # add to stack again to signal vertex has finished DFS
+
+                for u in self.get_edge(v):
+                    if u not in statuses:
+                        to_visit.append(u)
+
+        order.reverse()
+
+        return order
 
 
 def main():
@@ -150,6 +184,30 @@ def main():
     print("Parents (bfs): ", bfs_parents)
 
     print("Contains a cycle: ", dg.contains_cycle())
+
+    print("Topological sort", dg.topological_sort())
+
+    # another with edges added out of order
+    dg_small = DirectedGraph()
+    dg_small.add_edge(2, 1)
+    dg_small.add_edge(4, 5)
+    dg_small.add_edge(0, 1)
+    dg_small.add_edge(1, 4)
+    dg_small.add_edge(1, 3)
+
+    print("Topological sort", dg_small.topological_sort())
+
+    # making edges out of order with random~ish vertex numbers
+    dg_other = DirectedGraph()
+    dg_other.add_edge(3, 11)
+    dg_other.add_edge(5, 2)
+    dg_other.add_edge(2, 4)
+    dg_other.add_edge(2, 7)
+    dg_other.add_edge(8, 11)
+    dg_other.add_edge(4, 7)
+    dg_other.add_edge(7, 8)
+
+    print("Topological sort", dg_other.topological_sort())
 
 
 if __name__ == "__main__":
