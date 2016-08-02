@@ -1,4 +1,5 @@
 import queue
+import copy
 
 
 class DirectedGraph(object):
@@ -136,7 +137,7 @@ class DirectedGraph(object):
         order = []
         statuses = {}
 
-        assert(not self.contains_cycle())
+        assert (not self.contains_cycle())
 
         for vertex in self.get_vertex():
             to_visit = [vertex]
@@ -160,8 +161,15 @@ class DirectedGraph(object):
 
         return order
 
+    def strongly_connected_components(self):
+        """
+        Compute the vertices in the strongly connected components
+        :return:
+        """
+        pass
 
-def main():
+
+def get_test_graph_1():
     dg = DirectedGraph()
     dg.add_edge(0, 1)
     dg.add_edge(0, 5)
@@ -173,21 +181,11 @@ def main():
     dg.add_edge(6, 5)
     dg.add_edge(7, 5)
     dg.add_edge(7, 5)
-    # dg.add_edge(8, 0) # uncomment to create a cycle
 
-    components, dfs_parents = dg.dfs()
+    return dg
 
-    print("Components: ", components)
-    print("Parents (dfs): ", dfs_parents)
 
-    bfs_parents = dg.bfs()
-    print("Parents (bfs): ", bfs_parents)
-
-    print("Contains a cycle: ", dg.contains_cycle())
-
-    print("Topological sort", dg.topological_sort())
-
-    # another with edges added out of order
+def get_test_graph_2():
     dg_small = DirectedGraph()
     dg_small.add_edge(2, 1)
     dg_small.add_edge(4, 5)
@@ -195,9 +193,10 @@ def main():
     dg_small.add_edge(1, 4)
     dg_small.add_edge(1, 3)
 
-    print("Topological sort", dg_small.topological_sort())
+    return dg_small
 
-    # making edges out of order with random~ish vertex numbers
+
+def get_test_graph_3():
     dg_other = DirectedGraph()
     dg_other.add_edge(3, 11)
     dg_other.add_edge(5, 2)
@@ -207,8 +206,74 @@ def main():
     dg_other.add_edge(4, 7)
     dg_other.add_edge(7, 8)
 
-    print("Topological sort", dg_other.topological_sort())
+    return dg_other
 
+
+def get_test_graph_4():
+    """
+    Returns graph containing a cycle
+    :return:
+    """
+    dg = copy.copy(get_test_graph_1())
+    dg.add_edge(8, 0)  # creates cycle
+
+    return dg
+
+
+def get_test_graph_5():
+    """
+    Returns a graph with 3 cycles and 5 strongly connected components
+    :return:
+    """
+    dg = DirectedGraph()
+    dg.add_edge(0, 2)
+    dg.add_edge(1, 3)
+    dg.add_edge(3, 2)
+    dg.add_edge(2, 1)
+    dg.add_edge(4, 5)
+    dg.add_edge(5, 6)
+    dg.add_edge(6, 4)
+    dg.add_edge(3, 5)
+    dg.add_edge(7, 5)
+    dg.add_edge(8, 10)
+    dg.add_edge(10, 11)
+    dg.add_edge(11, 9)
+    dg.add_edge(9, 8)
+
+
+def test_dfs():
+    dg1 = get_test_graph_1()
+    c1, p1 = dg1.dfs()
+    assert (c1 == {0, 3, 7})
+    assert (p1 == {1: 0, 2: 1, 4: 2, 5: 0, 6: 2, 8: 5})
+
+
+def test_bfs():
+    dg1 = get_test_graph_1()
+    p1 = dg1.bfs()
+    assert(p1 == {1: 0, 2: 1, 4: 2, 5: 0, 6: 2, 8: 5})
+
+
+def test_contains_cycle():
+    assert(get_test_graph_1().contains_cycle() == False)
+    assert(get_test_graph_2().contains_cycle() == False)
+    assert(get_test_graph_3().contains_cycle() == False)
+    assert(get_test_graph_4().contains_cycle() == True)
+
+
+def test_topological_sort():
+    assert (get_test_graph_1().topological_sort() == [7, 3, 0, 1, 2, 4, 6, 5, 8])
+    assert (get_test_graph_2().topological_sort() == [2, 0, 1, 3, 4, 5])
+    assert (get_test_graph_3().topological_sort() == [5, 3, 2, 4, 7, 8, 11])
+
+
+def main():
+    test_dfs()
+    test_bfs()
+    test_contains_cycle()
+    test_topological_sort()
+
+    print("Tests complete.")
 
 if __name__ == "__main__":
     main()
