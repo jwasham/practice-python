@@ -15,7 +15,7 @@ class GraphUndirectedWeighted(object):
         self.adjacency_list[source].append(Edge(dest, weight))
         self.adjacency_list[dest].append(Edge(source, weight))
 
-    def get_edge(self, vertex):
+    def get_neighbor(self, vertex):
         for e in self.adjacency_list[vertex]:
             yield e
 
@@ -43,7 +43,7 @@ def dijkstra(graph, source, dest):
         v_tuple = q.get()
         v = v_tuple[1]
 
-        for e in graph.get_edge(v):
+        for e in graph.get_neighbor(v):
             candidate_distance = distances[v] + e.weight
             if distances[e.vertex] > candidate_distance:
                 distances[e.vertex] = candidate_distance

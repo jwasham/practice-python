@@ -28,7 +28,7 @@ class DirectedGraph(object):
         for v in self.adjacency_list:
             yield v
 
-    def get_edge(self, vertex):
+    def get_neighbor(self, vertex):
         """
         Generator for returning the next vertex adjacent to the given vertex
         :param vertex:
@@ -60,7 +60,7 @@ class DirectedGraph(object):
             while to_visit:
                 v = to_visit.pop()
 
-                for neighbor in self.get_edge(v):
+                for neighbor in self.get_neighbor(v):
                     if neighbor not in parents:
                         parents[neighbor] = v
                         to_visit.append(neighbor)
@@ -82,7 +82,7 @@ class DirectedGraph(object):
             while not to_visit.empty():
                 v = to_visit.get()
 
-                for neighbor in self.get_edge(v):
+                for neighbor in self.get_neighbor(v):
                     if neighbor not in parents:
                         parents[neighbor] = v
                         to_visit.put(neighbor)
@@ -113,7 +113,7 @@ class DirectedGraph(object):
                     statuses[v] = STATUS_STARTED
                     to_visit.append(v)  # add to stack again to signal vertex has finished DFS
 
-                for u in self.get_edge(v):
+                for u in self.get_neighbor(v):
                     if u in statuses:
                         if statuses[u] == STATUS_STARTED:
                             contains_cycle = True
@@ -152,7 +152,7 @@ class DirectedGraph(object):
                     statuses[v] = STATUS_STARTED
                     to_visit.append(v)  # add to stack again to signal vertex has finished DFS
 
-                for u in self.get_edge(v):
+                for u in self.get_neighbor(v):
                     if u not in statuses:
                         to_visit.append(u)
 
