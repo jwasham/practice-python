@@ -99,6 +99,30 @@ class UndirectedGraph(object):
 
         return parents
 
+    def is_bipartite(self):
+        """
+        Returns true if graph is bipartite
+        :return:
+        """
+        is_bipartite = True
+        colorings = {}
+        to_visit = queue.Queue()
+        to_visit.put(0)
+        colorings[0] = 0
+
+        while not to_visit.empty() and is_bipartite:
+            v = to_visit.get()
+
+            for u in self.get_neighbor(v):
+                if u not in colorings:
+                    colorings[u] = 1 - colorings[v]
+                    to_visit.put(u)
+                elif colorings[u] == colorings[v]:
+                    is_bipartite = False
+                    break
+
+        return is_bipartite
+
 
 def get_test_graph_1():
     udg = UndirectedGraph(9)
@@ -114,6 +138,21 @@ def get_test_graph_1():
     udg.add_edge(5, 6)
     udg.add_edge(6, 7)
     udg.add_edge(6, 8)
+
+    return udg
+
+
+def get_test_graph_2():
+    udg = UndirectedGraph(8)
+    udg.add_edge(0, 1)
+    udg.add_edge(0, 5)
+    udg.add_edge(2, 1)
+    udg.add_edge(2, 3)
+    udg.add_edge(2, 5)
+    udg.add_edge(4, 3)
+    udg.add_edge(4, 5)
+    udg.add_edge(4, 7)
+    udg.add_edge(6, 7)
 
     return udg
 
@@ -136,10 +175,19 @@ def test_bfs():
     assert(p1 == {0: 1, 1: 0, 2: 1, 3: 2, 4: 3, 5: 3, 6: 7, 7: 1, 8: 7})
 
 
+def test_bipartite():
+    udg = get_test_graph_1()
+    assert(udg.is_bipartite() == False)
+
+    udg2 = get_test_graph_2()
+    assert (udg2.is_bipartite() == True)
+
+
 def main():
     test_dfs_recursive()
     test_dfs_iterative()
     test_bfs()
+    test_bipartite()
 
     print("Tests complete.")
 
