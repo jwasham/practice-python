@@ -102,15 +102,14 @@ class UndirectedGraph(object):
     def is_bipartite(self):
         """
         Returns true if graph is bipartite
-        :return:
+        :rtype: bool
         """
-        is_bipartite = True
         colorings = {}
         to_visit = queue.Queue()
         to_visit.put(0)
         colorings[0] = 0
 
-        while not to_visit.empty() and is_bipartite:
+        while not to_visit.empty():
             v = to_visit.get()
 
             for u in self.get_neighbor(v):
@@ -118,10 +117,9 @@ class UndirectedGraph(object):
                     colorings[u] = 1 - colorings[v]
                     to_visit.put(u)
                 elif colorings[u] == colorings[v]:
-                    is_bipartite = False
-                    break
+                    return False
 
-        return is_bipartite
+        return True
 
 
 def get_test_graph_1():
