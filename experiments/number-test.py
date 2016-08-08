@@ -1,4 +1,3 @@
-import os
 
 
 def main():
@@ -12,7 +11,7 @@ def main():
             output.append(line_number * int(line.rstrip()))
 
     output_handle = open(output_file, "w")
-    output_handle.write(os.linesep.join(str(n) for n in output))
+    output_handle.write('\n'.join(str(n) for n in output))
 
 
 if __name__ == "__main__":
