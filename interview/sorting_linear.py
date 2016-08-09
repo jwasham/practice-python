@@ -33,7 +33,6 @@ class Bitsort(object):
                     yield base + j
 
 
-@profile
 def main():
     bitsorter = Bitsort(9999999)
 
