@@ -1,4 +1,6 @@
 """
+Task:
+
 Implement an algorithm to sort 1,000,000 32-bit integers, using only 350K of memory.
 The numbers could be any number from 0 to 9,999,999
 The numbers are in a file, one line per number. There are no duplicates.
@@ -31,6 +33,7 @@ class Bitsort(object):
                     yield base + j
 
 
+@profile
 def main():
     bitsorter = Bitsort(9999999)
 
@@ -38,7 +41,7 @@ def main():
         for line in in_file:
             bitsorter.save_number(int(line.rstrip()))
 
-    out_file = open("out.txt", "w")
+    out_file = open("out.txt", "w", 4096)
     for number in bitsorter.get_sorted_numbers():
         out_file.write(str(number) + "\n")
 

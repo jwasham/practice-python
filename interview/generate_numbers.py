@@ -6,7 +6,7 @@ import random
 
 
 def main():
-    numbers = random.sample(range(9999999), 100)
+    numbers = random.sample(range(9999999), 1000000)
     open("numbers.txt", "w")\
         .write("\n".join(str(n) for n in numbers))
 
