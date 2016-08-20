@@ -2,8 +2,9 @@
 Microservice for Fibonacci
 """
 
-from socket import *
 from fib import fib
+from socket import *
+from threading import Thread
 
 
 def fib_server(address):
@@ -15,7 +16,7 @@ def fib_server(address):
     while True:
         client, addr = sock.accept()
         print("Connected on {}", addr)
-        fib_handler(client)
+        Thread(target=fib_handler, args=(client,)).start()
 
 
 def fib_handler(client):
