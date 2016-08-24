@@ -16,11 +16,12 @@ def execute_thread(thread_num):
 def main():
     for i in range(10):
         thread = threading.Thread(target=execute_thread, args=(i, ))
+        # thread.daemon = True
         thread.start()
+        # thread.join()
 
-        print("Active threads: ", threading.active_count())
-
-        print("thread objects: ", threading.enumerate())
+    print("Active threads: ", threading.active_count())
+    print("thread objects: ", threading.enumerate())
 
 if __name__ == '__main__':
     main()
