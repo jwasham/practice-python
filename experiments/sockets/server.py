@@ -10,7 +10,7 @@ from threading import Thread
 def fib_server(address):
     sock = socket(AF_INET, SOCK_STREAM)
     sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
+    sock.bind(('', address))
     sock.listen(5)
 
     while True:
@@ -32,4 +32,4 @@ def fib_handler(client):
     print("Closed")
 
 
-fib_server(('', 25000))
+fib_server(25000)
