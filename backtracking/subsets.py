@@ -45,8 +45,10 @@ def backtrack_compact(working_set, k, n):
 
 
 def main():
-    n = int(sys.argv[1])
-    # n = 2
+    if 0 < 1 < len(sys.argv):
+        n = int(sys.argv[1])
+    else:
+        exit('Usage: subsets.py number')
 
     global solutions
     solutions = []
@@ -56,6 +58,7 @@ def main():
 
     backtrack_compact({}, 0, n)
     print(solutions)
+    print('Number of subsets: {}'.format(len(solutions)))
 
 
 if __name__ == '__main__':
