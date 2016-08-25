@@ -3,17 +3,26 @@ import threading
 import time
 
 
+def synchronize(func):
+    def lock_resource(*args, **kwargs):
+        global lock
+        lock.acquire()
+
+        try:
+            func(*args, **kwargs)
+        finally:
+            lock.release()
+
+    return lock_resource
+
+
+@synchronize
 def count_up(num):
 
-    global database, lock
+    global database
 
-    lock.acquire()
-
-    try:
-        time.sleep(random.randrange(3))
-        database.append(num)
-    finally:
-        lock.release()
+    time.sleep(random.randrange(3))
+    database.append(num)
 
 
 def main():
