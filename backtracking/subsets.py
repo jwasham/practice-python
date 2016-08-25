@@ -45,8 +45,8 @@ def backtrack_compact(working_set, k, n):
 
 
 def main():
-    # n = sys.argv[1]
-    n = 2
+    n = int(sys.argv[1])
+    # n = 2
 
     global solutions
     solutions = []
