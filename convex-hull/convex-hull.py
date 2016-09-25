@@ -2,7 +2,6 @@ from collections import namedtuple
 import matplotlib.pyplot as plt
 import random
 
-
 Point = namedtuple('Point', 'x y')
 
 
@@ -19,26 +18,34 @@ class ConvexHull(object):
     def _get_orientation(self, origin, p1, p2):
         '''
         Returns the orientation of the Point p1 with regards to Point p2 using origin.
+        Negative if p1 is clockwise of p2.
         :param p1:
         :param p2:
         :return: integer
         '''
         difference = (
-                    ((p2.x - origin.x) * (p1.y - origin.y))
-                    - ((p1.x - origin.x) * (p2.y - origin.y))
-                )
+            ((p2.x - origin.x) * (p1.y - origin.y))
+            - ((p1.x - origin.x) * (p2.y - origin.y))
+        )
 
         return difference
 
     def compute_hull(self):
         '''
-        Computes the convex hull and returns the points on the hull.
+        Computes the points that make up the convex hull.
         :return:
         '''
-        points = sorted(self._points, key=lambda temp_point: temp_point.x)
+        points = self._points
 
+        # get leftmost point
         start = points[0]
-        point = points[0]
+        min_x = start.x
+        for p in points[1:]:
+            if p.x < min_x:
+                min_x = p.x
+                start = p
+
+        point = start
         self._hull_points.append(start)
 
         far_point = None
@@ -72,10 +79,12 @@ class ConvexHull(object):
         return self._hull_points
 
     def display(self):
+        # all points
         x = [p.x for p in self._points]
         y = [p.y for p in self._points]
         plt.plot(x, y, marker='D', linestyle='None')
 
+        # hull points
         hx = [p.x for p in self._hull_points]
         hy = [p.y for p in self._hull_points]
         plt.plot(hx, hy)
@@ -86,23 +95,10 @@ class ConvexHull(object):
 
 def main():
     ch = ConvexHull()
-    # for _ in range(10):
-    #     ch.add(Point(random.randint(0, 100), random.randint(0, 100)))
+    for _ in range(50):
+        ch.add(Point(random.randint(0, 100), random.randint(0, 100)))
 
-    ch.add(Point(1, 4))
-    ch.add(Point(3, 12))
-    ch.add(Point(5, 7))
-    ch.add(Point(3, 6))
-    ch.add(Point(12, 19))
-    ch.add(Point(4, 8))
-    ch.add(Point(5, 7))
-    ch.add(Point(9, 3))
-    ch.add(Point(9, 6))
-    ch.add(Point(10, 6))
-    ch.add(Point(8, 16))
-    ch.add(Point(2, 6))
-
-    ch.compute_hull()
+    print("Points on hull:", ch.get_hull_points())
     ch.display()
 
 
