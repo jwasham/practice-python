@@ -51,6 +51,7 @@ class ConvexHull(object):
         far_point = None
         while far_point is not start:
 
+            # get the first point (initial max) to use to compare with others
             p1 = None
             for p in points:
                 if p is point:
@@ -62,6 +63,7 @@ class ConvexHull(object):
             far_point = p1
 
             for p2 in points:
+                # ensure we aren't comparing to self or pivot point
                 if p2 is point or p2 is p1:
                     continue
                 else:
