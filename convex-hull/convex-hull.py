@@ -96,7 +96,7 @@ class ConvexHull(object):
 def main():
     ch = ConvexHull()
     for _ in range(50):
-        ch.add(Point(random.randint(0, 100), random.randint(0, 100)))
+        ch.add(Point(random.randint(-100, 100), random.randint(-100, 100)))
 
     print("Points on hull:", ch.get_hull_points())
     ch.display()
