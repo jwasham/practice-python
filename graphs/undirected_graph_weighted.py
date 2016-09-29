@@ -81,8 +81,7 @@ class GraphUndirectedWeighted(object):
         for i in self.get_vertex():
             weight = start_weight
             if i == 0:
-                weight = 0
-            q.put(([weight, i]))
+                q.put(([0, i]))
             weights[i] = weight
             parents[i] = None
 
