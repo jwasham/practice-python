@@ -36,6 +36,7 @@ def classify(to_classify):
 
 def main():
     to_classify = [
+        [160, TEXTURE_BUMPY],
         [145, TEXTURE_BUMPY],
         [120, TEXTURE_SMOOTH],
         [100, TEXTURE_BUMPY],
