@@ -2,7 +2,6 @@ import random
 
 
 class QuickSort(object):
-
     def __init__(self, numbers):
         self.values = numbers
         self.count = len(self.values)
@@ -22,16 +21,15 @@ class QuickSort(object):
 
         pivot = self.values[pivot_index]
 
-        while i <= j:
+        while i < j:
             while self.values[i] < pivot:
                 i += 1
             while self.values[j] > pivot:
                 j -= 1
             if i <= j:
-                if i < j:
-                    temp = self.values[i]
-                    self.values[i] = self.values[j]
-                    self.values[j] = temp
+                temp = self.values[i]
+                self.values[i] = self.values[j]
+                self.values[j] = temp
                 i += 1
                 j -= 1
 
