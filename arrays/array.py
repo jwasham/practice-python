@@ -9,9 +9,9 @@ def array_test():
     ar.append(6)
 
     print(ar)
-    print("Index of 4: ", ar.index(4))  # index of given value
+    print("Index of 4: ", ar.index(3))  # index of given value
 
-    ar.remove(4)  # remove item with given value
+    ar.remove(3)  # remove item with given value
     print("Removed 4: ", ar)
 
     ar.reverse()
