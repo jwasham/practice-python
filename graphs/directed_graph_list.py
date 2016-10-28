@@ -181,7 +181,7 @@ class DirectedGraph(object):
     def strongly_connected_components(self):
         """
         Compute the vertices in the strongly connected components
-        :return list of lists, one for each components vertices:
+        :return list of lists, one for each component's vertices:
         """
         stack = self.scc_dfs_forward_pass()
         components = self.scc_dfs_reverse_pass(stack)
@@ -310,14 +310,14 @@ def test_dfs():
 def test_bfs():
     dg1 = get_test_graph_1()
     p1 = dg1.bfs()
-    assert(p1 == {1: 0, 2: 1, 4: 2, 5: 0, 6: 2, 8: 5})
+    assert (p1 == {1: 0, 2: 1, 4: 2, 5: 0, 6: 2, 8: 5})
 
 
 def test_contains_cycle():
-    assert(get_test_graph_1().contains_cycle() == False)
-    assert(get_test_graph_2().contains_cycle() == False)
-    assert(get_test_graph_3().contains_cycle() == False)
-    assert(get_test_graph_4().contains_cycle() == True)
+    assert (get_test_graph_1().contains_cycle() == False)
+    assert (get_test_graph_2().contains_cycle() == False)
+    assert (get_test_graph_3().contains_cycle() == False)
+    assert (get_test_graph_4().contains_cycle() == True)
 
 
 def test_topological_sort():
@@ -329,10 +329,10 @@ def test_topological_sort():
 def test_strongly_connected_components():
     dg = get_test_graph_5()
 
-    assert(dg.contains_cycle())
+    assert (dg.contains_cycle())
 
     components = dg.strongly_connected_components()
-    assert(components == [[10, 11, 9, 8], [7], [0], [1, 3, 2], [6, 4, 5]])
+    assert (components == [[10, 11, 9, 8], [7], [0], [1, 3, 2], [6, 4, 5]])
 
 
 def main():
@@ -343,6 +343,7 @@ def main():
     test_strongly_connected_components()
 
     print("Tests complete.")
+
 
 if __name__ == "__main__":
     main()

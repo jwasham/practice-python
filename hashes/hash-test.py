@@ -3,6 +3,7 @@ import random
 import scipy
 import matplotlib.pyplot as plt
 
+
 # This script will test multiple hashes on strings to see if we get a uniform distribution
 
 
@@ -93,9 +94,7 @@ def polyhash_noprime(word, a, m):
     return abs(hash % m)
 
 
-
 def show_distribution(buckets, title):
-
     counts = {}
     for v in buckets:
         if v in counts.keys():
@@ -146,6 +145,7 @@ def main():
         buckets[hash] += 1
 
     show_distribution(buckets, "Bucket size distribution - PolyHash, no prime")
+
 
 if __name__ == "__main__":
     main()
