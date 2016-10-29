@@ -1,25 +1,28 @@
-
 def hamming_distance(x, y):
     difference = x ^ y
     count = 0
-    while difference != 0:
-        count += 1
+    while difference:
         # this removes ones from right to left (least to most significant)
         difference &= difference - 1
+        count += 1
     return count
 
 
-# Kernighan method
+# Wegner method
 def hamming_weight(x):
+    if x < 0:
+        return None
+
     count = 0
-    while x != 0:
-        count += 1
+    while x:
         x &= x - 1
+        count += 1
+
     return count
 
 
 def pop_count(i):
-    i = i - ((i >> 1) & 0x55555555)
+    i -= ((i >> 1) & 0x55555555)
     i = (i & 0x33333333) + ((i >> 2) & 0x33333333)
     return (((i + (i >> 4) & 0xF0F0F0F) * 0x1010101) & 0xffffffff) >> 24
 
@@ -204,6 +207,7 @@ def main():
     print("swap 1, 3", swap_ints(1, 3))
     print("swap 213, 14", swap_ints(213, 14))
     print("swap 872, 992", swap_ints(872, 992))
+
 
 if __name__ == "__main__":
     main()
