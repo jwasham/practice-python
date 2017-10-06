@@ -11,7 +11,7 @@ def array_test():
     print(ar)
     print("Index of 4: ", ar.index(4))  # index of given value
 
-    ar.remove(4)  # remove item with given value
+    ar.remove(4)  # remove the first occurence of item with given value
     print("Removed 4: ", ar)
 
     ar.reverse()
