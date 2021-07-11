@@ -52,7 +52,8 @@ class LinkedList(object):
                     prev.set_next(current.get_next())
                 else:
                     self.head_ = current.get_next()
-            prev = current
+            else
+                prev = current
             current = current.get_next()
 
     # Pushes an item on the front of the list.
