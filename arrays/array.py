@@ -18,6 +18,15 @@ def array_test():
     print("reversed: ", ar)
     print("sorted return: ", sorted(ar))
 
+
+# Alternate method to reverse the array
+
+    # we can also reverse the array by using array slicing 
+    ar = ar[::-1]
+    print("reversed: ", ar)
+    print("sorted return: ", sorted(ar))
+
+
     ar.sort()
     print("sorted in place: ", ar)
 
