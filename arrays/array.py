@@ -1,14 +1,17 @@
 # Experiments using Python arrays and vectors
-
+# Practice code added by jmcio 4/24/22
 
 def array_test():
     ar = [3, 2, 4, 5]
+    print("Original: ", ar)
 
     ar.pop()
+    print("Pop: ", ar)
 
     ar.append(6)
+    print("Append: ", ar)
 
-    print(ar)
+    #print(ar)
     print("Index of 4: ", ar.index(4))  # index of given value
 
     ar.remove(4)  # remove the first occurrence of item with given value
