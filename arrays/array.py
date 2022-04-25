@@ -24,10 +24,14 @@ def array_test():
     ar.sort()
     print("sorted in place: ", ar)
 
+def vector_practice(size):
+    vector = list(range(size))
+    print("List with size: ", size, vector)
+
 
 def main():
-    array_test()
-
+#    array_test()
+    vector_practice(16)
 
 if __name__ == "__main__":
     main()
