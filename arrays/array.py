@@ -1,6 +1,7 @@
 # Experiments using Python arrays and vectors
 # Practice code added by jmcio 4/24/22
 
+
 def array_test():
     ar = [3, 2, 4, 5]
     print("Original: ", ar)
@@ -30,8 +31,8 @@ def vector_practice(size):
 
 
 def main():
-#    array_test()
-    vector_practice(16)
+    array_test()
+#    vector_practice(16)
 
 if __name__ == "__main__":
     main()
